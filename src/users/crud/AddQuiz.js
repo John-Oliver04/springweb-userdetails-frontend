@@ -9,7 +9,7 @@ export default function AddQuiz() {
         title:"",
         description:"",
         tag:"",
-        image:"",
+        image:null,
     });
 
     const {
@@ -19,14 +19,34 @@ export default function AddQuiz() {
     image
     }=quizzes;
 
-    const onInputChange=(e)=>{
-        setQuizzes({ ...quizzes,[e.target.name]:e.target.value });
-    }
+    const onInputChange = (e) => {
+        if (e.target.name === 'image') {
+          // If the input is for the image, set the image property in state
+          setQuizzes({ ...quizzes, [e.target.name]: e.target.files[0] });
+        } else {
+          setQuizzes({ ...quizzes, [e.target.name]: e.target.value });
+        }
+      };
 
     const onSubmit=async(e)=>{
         e.preventDefault();
-        await axios.post("http://localhost:8080/quiz", quizzes)
-        navigate("/")
+        // Create a FormData object to send the image file
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('tag', tag);
+        formData.append('image', image);
+    
+        try {
+          await axios.post("http://localhost:8080/quiz", formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data', // Set the content type for FormData
+            },
+          });
+          navigate("/");
+        } catch (error) {
+          console.error(error);
+        }
     }
   return (
     <div>
@@ -34,8 +54,9 @@ export default function AddQuiz() {
             <form onSubmit={(e)=>onSubmit(e)}  className='col-md-6 offset-md-3 border mt-5 rounded p-4 mt-2 shadow'>
                 <h2 className='mb-3 w-100 bg-success p-3 text-white text-center rounded'>Create Quiz</h2>
                 <div className="mb-3">
-                    <label for="formFile" class="form-label">Input Image</label>
-                    <input name='image' className="form-control" type="file" id="formFile"/> 
+                    <label htmlFor="formFile" className="form-label">Input Image</label>
+                    <input name='image' className="form-control" type="file" id="formFile" onChange={(e) => onInputChange(e)} />
+                    {image && <img src={URL.createObjectURL(image)} className='rounded border p-1' alt="Selected" style={{ marginTop: '10px', maxWidth: '100%' }} />}
                 </div>
                 <div className='mb-3'>
                     <label className='form-label' >Title</label>

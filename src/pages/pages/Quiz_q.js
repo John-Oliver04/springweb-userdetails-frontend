@@ -27,12 +27,12 @@ function Quiz_q() {
         <div>Quizzes</div> <Link to={'/create-quiz'} className='btn btn-sm btn-outline-success'>Create</Link>
       </div>
       <div className='container mt-2 '>
-          <div className='border shadow rounded p-5 grid row justify-content-center'>
+          <div className='border shadow rounded p-5 grid row align-items-center d-flex'>
               {
                   quizzes.map((quiz, index)=>(
 
                       <div key={index} className="d-flex flex-column card m-2" style={{width: '18rem'}}>
-                          <img src={quiz.image == '' || 'https://img.icons8.com/ios/100/image--v1.png'}  className="card-img-top" height={'200px'} alt="..."/>
+                          <img src={quiz.image == null || 'https://img.icons8.com/ios/100/image--v1.png'}  className="card-img-top" height={'200px'} alt="..."/>
                           <div className="card-body">
                               <h5 className="h6 text-truncate">{quiz.title}</h5>
                               <p className="card-text text-truncate"> {quiz.description}</p>
