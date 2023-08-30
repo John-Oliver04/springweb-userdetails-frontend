@@ -1,27 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'; 
-import Navbar from './layout/Navbar';
-import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AddUser from './users/AddUser';
-import EditUser from './users/EditUser';
-import ViewUser from './users/ViewUser';
+import Navbar_q from './layout/question/Navbar_q';
+import Home_q from './pages/pages/Home_q';
+import AddQuestion from './users/crud/AddQuestion';
+import EditQuestion from './users/crud/EditQuestion';
+import Question_q from './pages/pages/Question_q';
+import AddQuiz from './users/crud/AddQuiz';
 
 
 function App() {
+
   return (
     <div className="App"> 
         <Router>
-          <Navbar/>
-
+          <Navbar_q/>
           <Routes>
-            <Route exact path="/" element={<Home/>}/>
-            <Route exact path="/adduser" element={<AddUser/>}/>
-            <Route exact path="/edituser/:id" element={<EditUser/>}/>
-            <Route exact path="/viewuser/:id" element={<ViewUser/>}/>
+            <Route exact path="/" element={<Home_q/>}/>
+            <Route exact path="/question" element={<Question_q/>}/>
+            <Route exact path="/create-question" element={<AddQuestion/>}/>
+            <Route exact path="/create-quiz" element={<AddQuiz/>}/>
+            <Route exact path="/edit-question/:id" element={<EditQuestion/>}/>
           </Routes>
-          
         </Router>
     </div>
   );
